@@ -70,8 +70,8 @@
       @(lookup @cache {}))))
 
 (defn refreshing
-  "takes a fn and ttl returns a lazy value which, when deref'd will invoke the function fn.
-   the value of which will be cached for `ttl` milliseconds at which point further derefs will
+  "takes a fn and ttl returns a lazy identity which, when deref'd will invoke the function fn.
+   the value of which will be cached for `ttl` milliseconds at which point a further deref will
    re-invoke the function (caching again for `ttl`)"
   [fn ttl]
   (let [ref (memoize-refreshing fn ttl)]

@@ -15,7 +15,7 @@ good if you want to represent a value that changes every 'x' seconds.
 
 ```clojure
     (defn really-expensive [] ...)
-    ;;the refreshing function will return a value that can be de-referenced in the usual way.
+    ;;the refreshing function will return an identity that can be de-referenced in the usual way.
     (def every-second (refreshing really-expensive 1000))
 
     ;;deref as so
@@ -25,6 +25,10 @@ good if you want to represent a value that changes every 'x' seconds.
     (def memoized (memoize-refreshing really-expensive 1000))
     ;;call as so
     (memoized)
+
+    ;;alternatively you can use a full core.cache factory
+    ;;which will give you a regular CacheProtocol implementation.
+    (refresh-cache-factory {:a 100} :ttl 1000)
 ```
 
 ## License
