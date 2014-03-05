@@ -63,7 +63,7 @@
   (let [cache (atom (refresh-cache-factory {} :ttl ttl))
         swapf #(if (has? % {})
                (hit % {})
-               (miss % {} (delay (fn)))]
+               (miss % {} (delay (fn))))]
     #(do
       (swap! cache swapf)
       @(lookup @cache {}))))
