@@ -60,11 +60,10 @@
   "take a function and return a memoized function that
    will re-invoke the function once the ttl is up (every `ttl` milliseconds)"
   [fn ttl]
-  (let [factory #(delay (fn))
-        cache (atom (refresh-cache-factory {} :ttl ttl))
+  (let [cache (atom (refresh-cache-factory {} :ttl ttl))
         swapf #(if (has? % {})
                (hit % {})
-               (miss % {} (factory)))]
+               (miss % {} (delay (fn)))]
     #(do
       (swap! cache swapf)
       @(lookup @cache {}))))
